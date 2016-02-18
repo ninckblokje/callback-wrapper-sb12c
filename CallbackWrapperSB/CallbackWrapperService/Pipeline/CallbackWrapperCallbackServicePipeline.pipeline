@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con4="http://www.bea.com/wli/sb/stages/alert/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="CallbackWrapperService/WSDLs/callbackwrapperprocess_client_ep"/>
+            <con:binding>
+                <con:name>CallbackWrapperProcessCallbackBinding</con:name>
+                <con:namespace>http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-N53ef05ff.c0af430.0.152f0e808c8.N7fdb">
+        <con:pipeline type="request" name="request-N53ef05ff.c0af430.0.152f0e808c8.N7fe2">
+            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fe0" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con4:alert xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con2:id>_ActionId-N53ef05ff.N180df1da.0.152f6186d03.N7ff8</con2:id>
+                        <con4:destination ref="CallbackWrapperService/Alert/ConsoleDestination"/>
+                        <con4:description>Callback request</con4:description>
+                        <con4:severity>normal</con4:severity>
+                    </con4:alert>
+                    <con1:assign varName="encodedReplyToUrl">
+                        <con2:id>_ActionId-N53ef05ff.N180df1da.0.152f6186d03.N7ffe</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$inbound/ctx:transport/ctx:request/http:query-parameters/http:parameter[@name='clientCallbackUrl']/@value</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaScript>
+                        <con2:id>_ActionId-N53ef05ff.c0af430.0.152f0e808c8.N7f97</con2:id>
+                        <con1:script>var encodedReplyToUrl=new java.lang.String(process.encodedReplyToUrl)
+var decoder=java.util.Base64.getDecoder()
+process.clientReplyToUrl=new java.lang.String(decoder.decode(encodedReplyToUrl),'UTF-8')</con1:script>
+                    </con1:javaScript>
+                    <con1:replace varName="header" contents-only="true">
+                        <con2:id>_ActionId-N53ef05ff.5bcd9891.0.152f622bcda.N7f62</con2:id>
+                        <con1:location>
+                            <con2:xpathText>./wsa05:To</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText>$clientReplyToUrl</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N53ef05ff.c0af430.0.152f0e808c8.N7fe1">
+            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fdf" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con4:alert>
+                        <con2:id>_ActionId-N53ef05ff.5bcd9891.0.152f622bcda.N7f68</con2:id>
+                        <con4:destination ref="CallbackWrapperService/Alert/ConsoleDestination"/>
+                        <con4:description>Callback response</con4:description>
+                        <con4:severity>normal</con4:severity>
+                    </con4:alert>
+                    <con1:insert varName="inbound">
+                        <con2:id>_ActionId-N53ef05ff.c0af430.0.152f0e808c8.N7fdc</con2:id>
+                        <con1:location>
+                            <con2:xpathText>./ctx:transport/ctx:response</con2:xpathText>
+                        </con1:location>
+                        <con1:where>last-child</con1:where>
+                        <con1:expr>
+                            <con2:xqueryText>&lt;http:http-response-code>200&lt;/http:http-response-code></con2:xqueryText>
+                        </con1:expr>
+                    </con1:insert>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N53ef05ff.c0af430.0.152f0e808c8.N7fdb">
+            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fda" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con4:alert>
+                        <con2:id>_ActionId-N53ef05ff.5bcd9891.0.152f622bcda.N7f65</con2:id>
+                        <con4:destination ref="CallbackWrapperService/Alert/ConsoleDestination"/>
+                        <con4:description>Callback error</con4:description>
+                        <con4:severity>warning</con4:severity>
+                        <con4:payload>
+                            <con2:xqueryText>$fault</con2:xqueryText>
+                        </con4:payload>
+                    </con4:alert>
+                    <con2:reply isError="true">
+                        <con2:id>_ActionId-N53ef05ff.c0af430.0.152f0e808c8.N7fd7</con2:id>
+                    </con2:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-N53ef05ff.c0af430.0.152f0e808c8.N7fe2</con:request>
+                <con:response>response-N53ef05ff.c0af430.0.152f0e808c8.N7fe1</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N53ef05ff.c0af430.0.152f0e808c8.N7ffe</con2:id>
+                        <con1:service ref="CallbackWrapperService/Business/CallbackWrapperCallbackService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation passThrough="true"/>
+                        <con1:outboundTransform>
+                            <con3:routing-options xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N53ef05ff.c0af430.0.152f0e808c8.N7fe3</con2:id>
+                                <con3:uriExpr>
+                                    <con2:xqueryText>$clientReplyToUrl</con2:xqueryText>
+                                </con3:uriExpr>
+                                <con3:qualityOfService>exactly-once</con3:qualityOfService>
+                            </con3:routing-options>
+                        </con1:outboundTransform>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

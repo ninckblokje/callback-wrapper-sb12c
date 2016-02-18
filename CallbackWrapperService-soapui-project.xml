@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="e7d6dd36-4f4b-4e10-9c7c-7c6b26d091c7" activeEnvironment="Default" name="CallbackWrapperService" resourceRoot="" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="17202d22-ca2e-4a1c-993e-919306c59d75" wsaVersion="NONE" name="CallbackWrapperProcessBinding" type="wsdl" bindingName="{http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess}CallbackWrapperProcessBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperService?wsdl"><con:part><con:url>http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="CallbackWrapperProcess" targetNamespace="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess" xmlns:WL5G3N0="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:WL5G3N1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:client="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <WL5G3N0:Policy WL5G3N1:Id="wsaddr_policy">
+    <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"/>
+  </WL5G3N0:Policy>
+  <plnk:partnerLinkType name="CallbackWrapperProcess">
+    <plnk:role name="CallbackWrapperProcessProvider" portType="client:CallbackWrapperProcess"/>
+    <plnk:role name="CallbackWrapperProcessRequester" portType="client:CallbackWrapperProcessCallback"/>
+  </plnk:partnerLinkType>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess" schemaLocation="http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperService?SCHEMA%2FCallbackWrapperService%2FSchemas%2Fcallbackwrapperprocess_client_ep"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="CallbackWrapperProcessRequestMessage">
+    <wsdl:part element="client:process" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="CallbackWrapperProcessResponseMessage">
+    <wsdl:part element="client:processResponse" name="payload"/>
+  </wsdl:message>
+  <wsdl:portType name="CallbackWrapperProcess">
+    <wsdl:operation name="process">
+      <wsdl:input message="client:CallbackWrapperProcessRequestMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CallbackWrapperProcessBinding" type="client:CallbackWrapperProcess">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:Policy>
+      <WL5G3N0:PolicyReference URI="#wsaddr_policy"/>
+    </WL5G3N0:Policy>
+    <wsdl:operation name="process">
+      <soap:operation soapAction="process" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CallbackWrapperProcessBindingQSService">
+    <wsdl:documentation>OSB Service</wsdl:documentation>
+    <wsdl:port binding="client:CallbackWrapperProcessBinding" name="CallbackWrapperProcessBindingQSPort">
+      <soap:address location="http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperService?SCHEMA%2FCallbackWrapperService%2FSchemas%2Fcallbackwrapperprocess_client_ep</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess" xmlns="http://www.w3.org/2001/XMLSchema">
+  <element name="process">
+    <complexType>
+      <sequence>
+        <element name="input" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="processResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperService</con:endpoint></con:endpoints><con:operation id="72b958eb-9af4-4328-9f74-afc578fd6bc9" isOneWay="false" action="process" name="process" bindingOperationName="process" type="One-Way" inputName="" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="1b4a877a-9415-4ee1-a692-eeb734a189a0" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cal="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <cal:process>\r
+         <cal:input>?</cal:input>\r
+      </cal:process>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="process"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="cbf199cf-b63c-4ad8-8029-e95afb16393e" wsaVersion="NONE" name="CallbackWrapperProcessCallbackBinding" type="wsdl" bindingName="{http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess}CallbackWrapperProcessCallbackBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperCallbackService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperCallbackService?wsdl"><con:part><con:url>http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperCallbackService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="CallbackWrapperProcess" targetNamespace="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess" xmlns:WL5G3N0="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:WL5G3N1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:client="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <plnk:partnerLinkType name="CallbackWrapperProcess">
+    <plnk:role name="CallbackWrapperProcessProvider" portType="client:CallbackWrapperProcess"/>
+    <plnk:role name="CallbackWrapperProcessRequester" portType="client:CallbackWrapperProcessCallback"/>
+  </plnk:partnerLinkType>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess" schemaLocation="http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperCallbackService?SCHEMA%2FCallbackWrapperService%2FSchemas%2Fcallbackwrapperprocess_client_ep"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="CallbackWrapperProcessRequestMessage">
+    <wsdl:part element="client:process" name="payload"/>
+  </wsdl:message>
+  <wsdl:message name="CallbackWrapperProcessResponseMessage">
+    <wsdl:part element="client:processResponse" name="payload"/>
+  </wsdl:message>
+  <wsdl:portType name="CallbackWrapperProcessCallback">
+    <wsdl:operation name="processResponse">
+      <wsdl:input message="client:CallbackWrapperProcessResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CallbackWrapperProcessCallbackBinding" type="client:CallbackWrapperProcessCallback">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="processResponse">
+      <soap:operation soapAction="processResponse" style="document"/>
+      <wsdl:input>
+        <soap:body namespace="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess" use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CallbackWrapperProcessCallbackBindingQSService">
+    <wsdl:documentation>OSB Service</wsdl:documentation>
+    <wsdl:port binding="client:CallbackWrapperProcessCallbackBinding" name="CallbackWrapperProcessCallbackBindingQSPort">
+      <soap:address location="http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperCallbackService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperCallbackService?SCHEMA%2FCallbackWrapperService%2FSchemas%2Fcallbackwrapperprocess_client_ep</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess" xmlns="http://www.w3.org/2001/XMLSchema">
+  <element name="process">
+    <complexType>
+      <sequence>
+        <element name="input" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="processResponse">
+    <complexType>
+      <sequence>
+        <element name="result" type="string"/>
+      </sequence>
+    </complexType>
+  </element>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperCallbackService</con:endpoint></con:endpoints><con:operation id="9dfa21b2-a973-427e-8223-034077d1aa2d" isOneWay="false" action="processResponse" name="processResponse" bindingOperationName="processResponse" type="One-Way" inputName="" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="231096da-68a2-4353-968b-d9f389d616f8" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperCallbackService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cal="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <cal:processResponse>\r
+         <cal:result>?</cal:result>\r
+      </cal:processResponse>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="processResponse"/></con:call></con:operation></con:interface><con:testSuite id="b3bfffb5-650f-42fc-9ff5-6dc4ae438e15" name="CallbackTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="3c82f312-8534-4a01-a6bc-a71c07c0f199" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Complete" searchProperties="true"><con:settings/><con:testStep type="request" name="SOAP Request" id="6177a351-6914-4c35-9164-ec3d3fcf6cfb"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CallbackWrapperProcessBinding</con:interface><con:operation>process</con:operation><con:request name="SOAP Request" id="673163e5-81e1-4a9e-8461-4a9eb3054a84" useWsAddressing="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cal="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <cal:process>\r
+         <cal:input>TestCase</cal:input>\r
+      </cal:process>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" generateMessageId="true" replyTo="http://localhost:8080"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="da524325-4136-4c38-bb8a-f6eb83e308f4" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CallbackOnly" searchProperties="true"><con:settings/><con:testStep type="request" name="SOAP Request" id="836ea812-29ea-461b-a7a4-1683a3217784"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>CallbackWrapperProcessCallbackBinding</con:interface><con:operation>processResponse</con:operation><con:request name="SOAP Request" id="9c6f7711-18d8-4abb-bd4b-b9d750819b75" useWsAddressing="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7101/CallbackWrapperService/Proxy/CallbackWrapperCallbackService?clientCallbackUrl=aHR0cDovL2xvY2FsaG9zdDo4MDgw</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cal="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <cal:processResponse>\r
+         <cal:result>?</cal:result>\r
+      </cal:processResponse>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" generateMessageId="true"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:mockService id="512859d3-3400-4886-b988-8b477ca7a0be" port="8080" path="/" host="DESKTOP-T7VHRK1" name="CallbackMockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="processResponse" id="aacc7082-54ef-472e-80ab-1014a58e2b35" interface="CallbackWrapperProcessCallbackBinding" operation="processResponse"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="2bbc823d-f48b-416e-8844-818d2b7c223b" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent/><con:wsaConfig mustUnderstand="NONE" version="200508" action="processResponse"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
