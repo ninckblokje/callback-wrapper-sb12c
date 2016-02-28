@@ -14,7 +14,23 @@
     </con:coreEntry>
     <con:router errorHandler="error-N53ef05ff.c0af430.0.152f0e808c8.N7fdb">
         <con:pipeline type="request" name="request-N53ef05ff.c0af430.0.152f0e808c8.N7fe2">
-            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fe0" name="Stage1">
+            <con:stage id="_StageId-N53ef05ff.23ff6413.0.15327de3b14.N8000" name="RequestStage">
+                <con:context>
+                    <con2:userNsDecl prefix="cal" namespace="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-N53ef05ff.23ff6413.0.15327de3b14.N7ffd</con2:id>
+                        <con1:location>
+                            <con2:xpathText>./cal:processResponse/cal:result</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText>concat('OSB-',$body/cal:processResponse/cal:result)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fe0" name="CallUrlStage">
                 <con:context/>
                 <con:actions>
                     <con4:alert xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
@@ -48,7 +64,7 @@ process.clientReplyToUrl=new java.lang.String(decoder.decode(encodedReplyToUrl),
             </con:stage>
         </con:pipeline>
         <con:pipeline type="response" name="response-N53ef05ff.c0af430.0.152f0e808c8.N7fe1">
-            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fdf" name="Stage1">
+            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fdf" name="HttpStatusStage">
                 <con:context/>
                 <con:actions>
                     <con4:alert>
@@ -71,7 +87,7 @@ process.clientReplyToUrl=new java.lang.String(decoder.decode(encodedReplyToUrl),
             </con:stage>
         </con:pipeline>
         <con:pipeline type="error" name="error-N53ef05ff.c0af430.0.152f0e808c8.N7fdb">
-            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fda" name="Stage1">
+            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fda" name="ErrorStage">
                 <con:context/>
                 <con:actions>
                     <con4:alert>

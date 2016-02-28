@@ -1,5 +1,7 @@
 .data
 .designer
+classes
 classesscac_out.xml
 *.diagram.jpg
 *.diagram.xml
+deploy

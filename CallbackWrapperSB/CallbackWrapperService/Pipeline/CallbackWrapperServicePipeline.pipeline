@@ -14,7 +14,23 @@
     </con:coreEntry>
     <con:router errorHandler="error-N53ef05ff.c0af430.0.152f0e808c8.N7fea">
         <con:pipeline type="request" name="request-N53ef05ff.c0af430.0.152f0e808c8.N7ffa">
-            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7ff8" name="Stage1">
+            <con:stage id="_StageId-N53ef05ff.23ff6413.0.15327de3b14.N7ffc" name="RequestStage">
+                <con:context>
+                    <con1:userNsDecl prefix="cal" namespace="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess"/>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-N53ef05ff.23ff6413.0.15327de3b14.N7ff9</con1:id>
+                        <con2:location>
+                            <con1:xpathText>./cal:process/cal:input</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con1:xqueryText>concat('OSBCALLBACK-',$body/cal:process/cal:input)</con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7ff8" name="CallbackUrlStage">
                 <con:context>
                     <con1:userNsDecl prefix="cal" namespace="http://xmlns.oracle.com/CallbackWrapperSOA/CallbackWrapperService/CallbackWrapperProcess"/>
                 </con:context>
@@ -62,7 +78,7 @@ process.encodedReplyToUrl=encoder.encodeToString(clientReplyToUrl.getBytes('UTF-
             </con:stage>
         </con:pipeline>
         <con:pipeline type="response" name="response-N53ef05ff.c0af430.0.152f0e808c8.N7ff9">
-            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7ff7" name="Stage1">
+            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7ff7" name="HttpStatusStage">
                 <con:context/>
                 <con:actions>
                     <con3:alert>
@@ -94,7 +110,7 @@ process.encodedReplyToUrl=encoder.encodeToString(clientReplyToUrl.getBytes('UTF-
             </con:stage>
         </con:pipeline>
         <con:pipeline type="error" name="error-N53ef05ff.c0af430.0.152f0e808c8.N7fea">
-            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fe9" name="Stage1">
+            <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fe9" name="ErrorStage">
                 <con:context/>
                 <con:actions>
                     <con3:alert>
