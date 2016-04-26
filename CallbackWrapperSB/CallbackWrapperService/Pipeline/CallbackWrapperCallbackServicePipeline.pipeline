@@ -25,7 +25,7 @@
                             <con2:xpathText>./cal:processResponse/cal:result</con2:xpathText>
                         </con1:location>
                         <con1:expr>
-                            <con2:xqueryText>concat('OSB-',$body/cal:processResponse/cal:result)</con2:xqueryText>
+                            <con2:xqueryText>concat('OSBCALLBACK-',$body/cal:processResponse/cal:result)</con2:xqueryText>
                         </con1:expr>
                     </con1:replace>
                 </con:actions>
@@ -33,12 +33,6 @@
             <con:stage id="_StageId-N53ef05ff.c0af430.0.152f0e808c8.N7fe0" name="CallUrlStage">
                 <con:context/>
                 <con:actions>
-                    <con4:alert xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
-                        <con2:id>_ActionId-N53ef05ff.N180df1da.0.152f6186d03.N7ff8</con2:id>
-                        <con4:destination ref="CallbackWrapperService/Alert/ConsoleDestination"/>
-                        <con4:description>Callback request</con4:description>
-                        <con4:severity>normal</con4:severity>
-                    </con4:alert>
                     <con1:assign varName="encodedReplyToUrl">
                         <con2:id>_ActionId-N53ef05ff.N180df1da.0.152f6186d03.N7ffe</con2:id>
                         <con1:expr>
@@ -60,6 +54,15 @@ process.clientReplyToUrl=new java.lang.String(decoder.decode(encodedReplyToUrl),
                             <con2:xqueryText>$clientReplyToUrl</con2:xqueryText>
                         </con1:expr>
                     </con1:replace>
+                    <con4:alert xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con2:id>_ActionId-N53ef05ff.N180df1da.0.152f6186d03.N7ff8</con2:id>
+                        <con4:destination ref="CallbackWrapperService/Alert/ConsoleDestination"/>
+                        <con4:description>Callback request</con4:description>
+                        <con4:severity>normal</con4:severity>
+                        <con4:payload>
+                            <con2:xqueryText>$clientReplyToUrl</con2:xqueryText>
+                        </con4:payload>
+                    </con4:alert>
                 </con:actions>
             </con:stage>
         </con:pipeline>
